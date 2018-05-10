@@ -1,5 +1,6 @@
 package com.springboot.test1.config;
 
+import com.springboot.test1.interceptor.LoggerInterceptor;
 import com.springboot.test1.interceptor.SessionInterceptor;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
@@ -19,5 +20,6 @@ public class SessionConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SessionInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/**");
     }
 }

@@ -1,7 +1,9 @@
 package com.springboot.test1.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.springboot.test1.entity.User;
 import com.springboot.test1.jpa.UserJpa;
+import com.springboot.test1.utils.LoggerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,10 @@ public class IndexController {
     @GetMapping("/login")
     @ResponseBody
     private String login(User user, HttpServletRequest request){
+
+        JSONObject obj = new JSONObject();
+        obj.put("msg","用户："+user.getName()+"，登录成功。");
+        request.setAttribute(LoggerUtils.LOGGER_RETURN,obj);
         String result  = "登录成功！";
         Optional<User> use = userJpa.findOne(new Specification<User>() {
             @Override
@@ -52,6 +58,7 @@ public class IndexController {
             request.getSession().setAttribute("id",use.get().getId());//将用户Id放在session中
             request.getSession().setAttribute("User",use.get());//将用户整体放在session中
         }
+
         return result;
     }
 }
